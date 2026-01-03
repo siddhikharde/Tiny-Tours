@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import mongoose from 'mongoose';
+import User from './models/user.js';
 import connectDB from './db.js';
 
 dotenv.config();
@@ -22,7 +22,64 @@ app.get('/health',(req,res)=>{
         success:"true"
     })
 })
- 
+
+app.post('/signUp', async (req, res)=>{
+    const {name, email, phone, city, country, password}=req.body;
+          const newUser = new User({
+        name,
+        email,
+        phone,
+        city,
+        country,
+        password
+       })
+       if(!name){
+        return res.json({
+            success:false,
+            message:"Name is required"
+        })
+       }
+       if(!email || !email.includes('@')){
+        return res.json({
+            success:false,
+            message:"Email is required"
+        })
+       }
+       if(!password){
+        return res.json({
+            success:false,
+            message:"password is required"
+        })
+       }
+      const existingUser=await User.findOne({email});
+      if(existingUser){
+        return res.json({
+            success:false,
+            message:"User with this email already exists"
+        })
+      }
+
+       try{   
+        const savedUser=await newUser.save();
+        return res.json({
+            success:true,
+            data:savedUser,
+             messsage:"User registered successfully",
+
+        })
+
+    }catch(e){
+        return res.json({
+            success:false,
+            message:"Error registering user",
+            error:e.message,
+        })
+
+    }
+})
+ app.post('/login', async (req, res)=>{
+
+ })
 
 
  app.listen(PORT,()=>{
