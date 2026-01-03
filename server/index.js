@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import User from './models/user.js';
 import connectDB from './db.js';
-
+import bcrypt from "bcryptjs"
 dotenv.config();
 
  const app=express();
@@ -25,13 +25,15 @@ app.get('/health',(req,res)=>{
 
 app.post('/signUp', async (req, res)=>{
     const {name, email, phone, city, country, password}=req.body;
+    const salt = bcrypt.genSaltSync(10);
+    const encryptedPassword=bcrypt.hashSync(password,salt)
           const newUser = new User({
         name,
         email,
         phone,
         city,
         country,
-        password
+        password:encryptedPassword
        })
        if(!name){
         return res.json({
@@ -85,8 +87,17 @@ app.post('/signUp', async (req, res)=>{
             message:"email and passwoed are requirde"
         })
     }
-    const existingUser=await User.findOne({email, password}).select("-password");
-    if(existingUser){
+    const existingUser=await User.findOne({email});
+    if(!existingUser){
+        return res.json({
+            success:false,
+            message:"User does not exist please signup"
+        })
+    }
+    const isPasswordCorrect=bcrypt.compareSync(password,existingUser.password);
+    existingUser.password=undefined;
+    
+    if(isPasswordCorrect){
         return res.json({
             success:true,
             data:existingUser,
@@ -95,7 +106,7 @@ app.post('/signUp', async (req, res)=>{
     }else{
         return res.json({
             success:false,
-            message:"user not exists please signup"
+            message:"invalid email or password"
         })
     }
 
