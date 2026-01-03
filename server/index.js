@@ -78,6 +78,27 @@ app.post('/signUp', async (req, res)=>{
     }
 })
  app.post('/login', async (req, res)=>{
+    const { email, password}=req.body;
+    if(!email || !password){
+        return res.json({
+            success:false,
+            message:"email and passwoed are requirde"
+        })
+    }
+    const existingUser=await User.findOne({email, password}).select("-password");
+    if(existingUser){
+        return res.json({
+            success:true,
+            data:existingUser,
+            message:"user login succesfull"
+        })
+    }else{
+        return res.json({
+            success:false,
+            message:"user not exists please signup"
+        })
+    }
+
 
  })
 
