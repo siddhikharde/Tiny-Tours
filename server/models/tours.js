@@ -19,8 +19,16 @@ const toursSchema=new Schema({
     endDate:{
         type:Date,
     },
+    photos:{
+        type:[{
+            "url":String,
+            "title":String,
+            "description":String
+        }],
+        default:[]
+    },
     user:{
-        type:Schema.Type.ObjectId,
+        type:Schema.Types.ObjectId,
         required:true,
     }
 })

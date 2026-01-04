@@ -3,8 +3,9 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import User from './models/user.js';
 import connectDB from './db.js';
-import bcrypt from "bcryptjs"
-import jwt from "jsonwebtoken"
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import Tour from "./models/tours.js";
 dotenv.config();
 
  const app=express();
@@ -29,6 +30,7 @@ const checkJwtToken=(req,res,next)=>{
     const jwtToken=authorization && authorization.split(" ")[1];
     try{
         const decode=jwt.verify(jwtToken,process.env.JWT_SECRET);
+        req.user=decode;
         console.log(decode)
         next();
     }catch(e){
@@ -37,12 +39,6 @@ const checkJwtToken=(req,res,next)=>{
         })
     }
 }
-
-app.get('/api_v1', checkJwtToken,(req, res)=>{
-    return res.json({
-        message:"v1 is working"
-    })
-})
 
 app.post('/signUp', async (req, res)=>{
     const {name, email, phone, city, country, password}=req.body;
@@ -140,7 +136,36 @@ app.post('/signUp', async (req, res)=>{
     }
  })
 
+app.post('/tours',checkJwtToken, async (req, res)=>{
+   const {title, description, startDate, endDate, cites} =req.body;
+   const newTour= new Tour({
+    title,
+    description,
+    cites,
+    startDate,
+    endDate,
+    user:req.user.id,
+   })
+   try{
+    const savedTour=await newTour.save();
+    return res.json({
+        success:true,
+        message:"Tours saved successfully",
+        data:savedTour,
+    })
 
+   }catch(e){
+    return res.json({
+         success:false,
+     message:"erroe while storing a tour",
+     error:e.message,
+     data:null
+    })
+     
+
+   }
+
+})
 
  app.listen(PORT,()=>{
     console.log(`Server is running on port ${PORT}`);
