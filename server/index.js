@@ -167,6 +167,15 @@ app.post('/tours',checkJwtToken, async (req, res)=>{
 
 })
 
+app.get('/tours', checkJwtToken, async (req, res)=>{
+    const getTours=await Tour.find({user:req.user.id}).populate("user")
+    return res.json({
+        success:true,
+        message:"toures feched succesfully",
+        data:getTours,
+    })
+})
+
  app.listen(PORT,()=>{
     console.log(`Server is running on port ${PORT}`);
     connectDB();
