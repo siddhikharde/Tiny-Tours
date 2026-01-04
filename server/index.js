@@ -7,6 +7,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import Tour from "./models/tours.js";
 import { checkJwtToken } from './middleware/jwt.js';
+import { getHealth,getHome } from './controllers/home.js';
 
 dotenv.config();
 
@@ -16,16 +17,8 @@ app.use(express.json());
 const PORT=process.env.PORT||3000;
 
 
-app.get('/',(req,res)=>{
-   return res.json({message:"Welcome to Tiny Tours Server"});
-})
-app.get('/health',(req,res)=>{
-    res.json({
-        status:"ok",
-        msg:"Server is healthy",
-        success:"true"
-    })
-})
+app.get('/',getHome);
+app.get('/health',getHealth);
 
 
 
