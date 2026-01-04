@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import User from './../models/user.js';
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import JWT_EXPIRATION from '../config.js';
 
 dotenv.config();
 const postSignUp=async (req, res)=>{
@@ -85,7 +86,7 @@ const postLogin=async (req, res)=>{
             email:existingUser.email,
         },process.env.JWT_SECRET,
     {
-        expiresIn:"1h"
+        expiresIn:JWT_EXPIRATION
     })
         return res.json({
             success:true,
