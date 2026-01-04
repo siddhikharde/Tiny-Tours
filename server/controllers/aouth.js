@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken'
+import User from './../models/user.js';
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+
 dotenv.config();
 const postSignUp=async (req, res)=>{
     const {name, email, phone, city, country, password}=req.body;
