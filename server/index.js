@@ -4,6 +4,7 @@ import cors from 'cors';
 import User from './models/user.js';
 import connectDB from './db.js';
 import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken"
 dotenv.config();
 
  const app=express();
@@ -98,10 +99,18 @@ app.post('/signUp', async (req, res)=>{
     existingUser.password=undefined;
     
     if(isPasswordCorrect){
+        const jwtToken=jwt.sign({
+            id:existingUser.id,
+            email:existingUser.email,
+        },process.env.JWT_SECRET,
+    {
+        expiresIn:"1h"
+    })
         return res.json({
             success:true,
             data:existingUser,
-            message:"user login succesfull"
+            message:"user login succesfull",
+            token:jwtToken
         })
     }else{
         return res.json({
@@ -109,9 +118,8 @@ app.post('/signUp', async (req, res)=>{
             message:"invalid email or password"
         })
     }
-
-
  })
+
 
 
  app.listen(PORT,()=>{
