@@ -24,6 +24,26 @@ app.get('/health',(req,res)=>{
     })
 })
 
+const checkJwtToken=(req,res,next)=>{
+    const {authorization}=req.headers;
+    const jwtToken=authorization && authorization.split(" ")[1];
+    try{
+        const decode=jwt.verify(jwtToken,process.env.JWT_SECRET);
+        console.log(decode)
+        next();
+    }catch(e){
+        return res.json({
+            message:"invalid or missing token"
+        })
+    }
+}
+
+app.get('/api_v1', checkJwtToken,(req, res)=>{
+    return res.json({
+        message:"v1 is working"
+    })
+})
+
 app.post('/signUp', async (req, res)=>{
     const {name, email, phone, city, country, password}=req.body;
     const salt = bcrypt.genSaltSync(10);
