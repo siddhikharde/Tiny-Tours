@@ -1,10 +1,19 @@
 import React from 'react'
-
+import { BrowserRouter, Route, Routes } from 'react-router'
+import Tours from './views/Tours'
+import Home from './views/Home'
+import EditTours from './views/EditTours'
 function App() {
   return (
-    <div>
-      <h1>Tiny tours</h1>
-    </div>
+   <>
+   <BrowserRouter>
+    <Routes>
+      <Route path='/' element={<Home/>}/>
+      <Route path='/tours' element={<Tours/>}/>
+      <Route path='/editTours' element={<EditTours/>}/>
+    </Routes>
+   </BrowserRouter>
+   </>
   )
 }
 
