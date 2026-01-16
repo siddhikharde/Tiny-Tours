@@ -14,4 +14,4 @@ const getUserData=()=>{
     const userData=localStorage.getItem("userData") || "{}";
     return JSON.parse(userData);
 }
-export {SetPageTitle,isUserLogedIn, getUserData};
+export {SetPageTitle,isUserLogedIn, getUserData, gwtUserJwtToken};

@@ -5,6 +5,8 @@ import Home from './views/Home'
 import EditTours from './views/EditTours'
 import SignUp from './views/SignUp'
 import Login from './views/Login'
+import DashBoard from './views/DashBoard'
+import NewTours from './views/NewTours'
 function App() {
   return (
    <>
@@ -13,6 +15,8 @@ function App() {
       <Route path='/' element={<Home/>}/>
       <Route path='/tours' element={<Tours/>}/>
       <Route path='/editTours' element={<EditTours/>}/>
+      <Route path='/dashBoard' element={<DashBoard/>}/>
+      <Route path='/newTour' element={<NewTours/>}/>
       <Route path='/signUp' element={<SignUp/>}/>
       <Route path='/login' element={<Login/>}/>
     </Routes>

@@ -1,11 +1,11 @@
 import React from 'react'
 
-function AddTours() {
+function NewTours() {
   return (
     <div>
-      
+      New Tours
     </div>
   )
 }
 
-export default AddTours
+export default NewTours

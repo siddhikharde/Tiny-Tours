@@ -1,11 +1,11 @@
 import React from 'react'
 
-function EditTours() {
+function DashBoard() {
   return (
     <div>
-      Edit tours
+      dashboard
     </div>
   )
 }
 
-export default EditTours
+export default DashBoard

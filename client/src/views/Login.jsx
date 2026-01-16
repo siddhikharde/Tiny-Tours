@@ -28,6 +28,10 @@ function Login() {
       localStorage.setItem("JwtToken", token);
       localStorage.setItem("userData", JSON.stringify(data));
       
+      setTimeout(()=>{
+      window.location.href("/dashBoard")
+      }, 1500)
+
     }else{
       toast.error(response.data.message || "Invalid email or password.");
     }
