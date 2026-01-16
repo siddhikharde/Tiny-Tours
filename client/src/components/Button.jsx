@@ -20,7 +20,7 @@ function Button({variant="primary", size="lg", title, onClick}) {
         ${variants[variant]}
         ${sizes[size]}
         rounded-md
-        m-4
+        m-1
         transition
         hover:opacity-90
         cursor-pointer
