@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import Input from '../components/Input'
-import {SetPageTitle} from '/utils.jsx';
+import {SetPageTitle} from '/Utils.jsx';
 import Button from '../components/Button'
 import toast, {Toaster} from 'react-hot-toast'
 import axios from 'axios'
