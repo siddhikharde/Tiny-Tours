@@ -3,47 +3,40 @@ import Navbar from '../components/Navbar'
 import { SetPageTitle, getUserJwtToken } from '../../Utils'
 import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast';
-
+import {Plus} from 'lucide-react'
+import { Link } from 'react-router';
 
 function DashBoard() {
-     const [token, setToken]=useState();
-     const [tours, setTours]=useState([]);
-    const getTours=async (token)=>{
-    const res=await axios.get("http://localhost:5000/tours", {
-        headers:{
-           Authorization:`Bearer ${token} `
+    const [tours, setTours] = useState([]);
+    const loadTours = async () => {
+ const jwtToken = getUserJwtToken()
+        const res = await axios.get("http://localhost:5000/tours", {
+            headers: {
+                Authorization: `Bearer ${jwtToken} `
+            }
+        })
+        if (res.data.success) {
+            toast.success(res.data.message || "Tours loaded");
+            setTours(res.data.data)
+        } else {
+            toast.error(res.data.message || "Failed to load tours");
         }
-    })
-
-    if(token){
-        toast.success(res.data.message || "Tours loaded");
-        setTours(res.data.data)
-    }else{
-        toast.error(res.data.message|| "Failed to load tours");
     }
+    useEffect(() => {
+        SetPageTitle({ title: "Dashboard" });
+            loadTours();
+    }, [])
+    return (
+        <div>
+            <Navbar />
 
-   }
-    useEffect(()=>{
-        SetPageTitle({title:"Dashboard"});
-        const jwtToken = getUserJwtToken()
-    setToken(jwtToken)
-    if(jwtToken){
-        getTours(jwtToken);
-        }
-      
-    },[])
-   
-   
-    
-  return (
-    <div>
-        <Navbar/>
-
-      dashboard
-
-      <Toaster/>
-    </div>
-  )
+            dashboard
+       <Link to={"./newTour"} className='fixed bottom-10 right-10 flex gap-2 p-4 font-bold rounded-2xl bg-[#22C55E]'>
+          <Plus /> Add Tours
+       </Link>
+            <Toaster />
+        </div>
+    )
 }
 
 export default DashBoard
