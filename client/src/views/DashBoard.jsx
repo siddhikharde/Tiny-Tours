@@ -31,7 +31,7 @@ function DashBoard() {
             <Navbar />
 
             dashboard
-       <Link to={"./newTour"} className='fixed bottom-10 right-10 flex gap-2 p-4 font-bold rounded-2xl bg-[#22C55E]'>
+       <Link to={"/tours/new"} className='fixed bottom-10 right-10 flex gap-2 p-4 font-bold rounded-2xl bg-[#22C55E]'>
           <Plus /> Add Tours
        </Link>
             <Toaster />
