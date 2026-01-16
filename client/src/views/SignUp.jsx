@@ -4,7 +4,7 @@ import Button from '../components/Button'
 import  toast,{ Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import { Link } from 'react-router';
-import SetPageTitle from '../util/SetPageTitle';
+import {SetPageTitle} from '/utils.jsx';
 function SignUp() {
   useEffect(()=>{
     SetPageTitle({title:"SignUp"});
