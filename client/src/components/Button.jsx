@@ -22,6 +22,7 @@ function Button({variant="primary", size="lg", title}) {
         m-4
         transition
         hover:opacity-90
+        cursor-pointer
       `}
     >
 {title}
