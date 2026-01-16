@@ -29,7 +29,7 @@ function Login() {
       localStorage.setItem("userData", JSON.stringify(data));
       
       setTimeout(()=>{
-      window.location.href("/dashBoard")
+      window.location.href=("/dashBoard")
       }, 1500)
 
     }else{
