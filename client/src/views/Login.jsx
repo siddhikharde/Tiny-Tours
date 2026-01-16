@@ -1,9 +1,13 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Input from '../components/Input'
+import SetPageTitle from '../util/SetPageTitle';
 import Button from '../components/Button'
 import {Link} from 'react-router'
 function Login() {
+    useEffect(()=>{
+    SetPageTitle({title:"Login"})
+  },[])
   const [loginUser, setLoginUser] = useState({
     email: "",
     password: ""
@@ -25,7 +29,7 @@ function Login() {
             setLoginUser({ ...loginUser, password: e.target.value })
           }} />
         </div>
-        <Button title={"Login"} variant={"primary"} size={"lg"} onClick={() => {
+        <Button title={"Login"} variant={"primary"} size={"md"} onClick={() => {
          
         }} />
         <Link to={"/signUp"} className='text-[15px] text-blue-900'>Don't have an Account ? Sign Up</Link>

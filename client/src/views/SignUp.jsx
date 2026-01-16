@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Input from '../components/Input'
 import Button from '../components/Button'
 import  toast,{ Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import { Link } from 'react-router';
+import SetPageTitle from '../util/SetPageTitle';
 function SignUp() {
+  useEffect(()=>{
+    SetPageTitle({title:"SignUp"});
+  },[])
   const [newUser, setNewUser] = useState({
     name: "",
     email: "",
