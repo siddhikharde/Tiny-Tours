@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Input from '../components/Input'
 import Button from '../components/Button'
+import {toast, Toaster} from 'react-hot-toast';
+import axios from 'axios';
 function SignUp() {
     const [newUser, setNewUser]=useState({
         name:"",
@@ -10,6 +12,20 @@ function SignUp() {
         country:"",
         password:""
     });
+    const createUser=async ()=>{
+      const response=await axios.post("http://localhost:5000/signUp", newUser);
+      if(response.data.success){
+        toast.success(response.data.message || "Account Created Successfully", {id:"SignUpSuccess"});
+        setNewUser({
+          name:"", email:"", password:"",mobile:"",city:"",country:"",
+        })
+        setTimeout(()=>{
+           window.location.href="/login"
+        },1500)
+      }else{
+        toast.error(response.data.message || "Signup failed", {id:"errorMessage"});
+      }
+    }
   return (
     <div className='bg-[#FFFFFF] min-h-screen'>
       <div className='flex flex-col gap-3 w-[90%] md:w-[450px] border border-2 border-[#CBD5E1] rounded-xl m-5 shadow-2xl justify-center items-center mx-auto md:p-8 p-5'>
@@ -54,8 +70,11 @@ function SignUp() {
       }}/>
       </div>
       
-      <Button title={"Sign Up"} variant={"primary"} size={"lg"}/>
+      <Button title={"Sign Up"} variant={"primary"} size={"lg"} onClick={()=>{
+       createUser();
+      }}/>
       </div>
+      <Toaster/>
     </div>
   )
 }

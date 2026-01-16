@@ -11,10 +11,11 @@ const sizes={
   lg: "text-lg px-6 py-3",
 };
 
-function Button({variant="primary", size="lg", title}) {
+function Button({variant="primary", size="lg", title, onClick}) {
   return (
     
      <button
+     onClick={onClick}
       className={`
         ${variants[variant]}
         ${sizes[size]}
