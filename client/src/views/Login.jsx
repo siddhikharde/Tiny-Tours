@@ -3,15 +3,36 @@ import { useState, useEffect } from 'react'
 import Input from '../components/Input'
 import SetPageTitle from '../util/SetPageTitle';
 import Button from '../components/Button'
+import toast, {Toaster} from 'react-hot-toast'
+import axios from 'axios'
 import {Link} from 'react-router'
 function Login() {
     useEffect(()=>{
     SetPageTitle({title:"Login"})
-  },[])
+  },[]);
+
   const [loginUser, setLoginUser] = useState({
     email: "",
     password: ""
-  })
+  });
+    const checkLoginUser=async()=>{
+    const response=await axios.post("http://localhost:5000/login", loginUser);
+    if(response.data.success){
+      toast.success(response.data.message || "Login Successful");
+      setLoginUser({
+        email:"",
+        password:""
+      })
+
+      const {token, data}=response.data;
+      localStorage.setItem("JwtToken", token);
+      localStorage.setItem("userData", JSON.stringify(data));
+
+      
+    }else{
+      toast.error(response.data.message || "Invalid email or password.");
+    }
+  }
   return (
     <div className='bg-[#FFFFFF] min-h-screen'>
       <h1 className='text-center p-2 mt-5 text-4xl font-bold text-[#0F172A]' >Welcome Back</h1>
@@ -30,10 +51,11 @@ function Login() {
           }} />
         </div>
         <Button title={"Login"} variant={"primary"} size={"md"} onClick={() => {
-         
+           checkLoginUser();
         }} />
         <Link to={"/signUp"} className='text-[15px] text-blue-900'>Don't have an Account ? Sign Up</Link>
       </div>
+      <Toaster/>
     </div>
   )
 }
