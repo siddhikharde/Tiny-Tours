@@ -5,7 +5,7 @@ function MultiSelect({selectedItems,placeholder, onRemoveItems, onAddItem}) {
     const [newItem , setNewItem]=useState("");
 
   return (
-    <div className='flex flex-wrap '>
+    <div className='flex flex-wrap w-full'>
       {
         selectedItems.map((item, index)=>{
             return(
