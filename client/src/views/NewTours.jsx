@@ -2,6 +2,11 @@ import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
 import Input from '../components/Input'
 import MultiSelect from '../components/MultiSelect';
+import Button from '../components/Button';
+import axios from 'axios'
+import {getUserJwtToken} from '/Utils.jsx'
+import toast,{ Toaster } from 'react-hot-toast';
+
 
 function NewTours() {
   const [newTour, setNewTour] = useState({
@@ -9,9 +14,28 @@ function NewTours() {
     description: "",
     startDate: "",
     endDate: "",
-    cities: [],
+    cites: [],
     photos: []
   });
+  const addTour= async ()=>{
+    const jwtToken=getUserJwtToken();
+    console.log(jwtToken)
+      const res = await axios.post(
+        "http://localhost:5000/tours",
+        newTour,
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`
+          }
+        }
+      )
+
+    if(res.data.success){
+     toast.success(res.data.message);
+    }else{
+      toast.error(res.data.message);
+    }
+  }
 
   return (
     <div>
@@ -36,21 +60,41 @@ function NewTours() {
             setNewTour({ ...newTour, description: e.target.value })
           }
         />
-        <MultiSelect selectedItems={newTour.cities} 
+        <MultiSelect selectedItems={newTour.cites} 
         placeholder={"Enter Cites"}
         onAddItem={(val)=>{
               setNewTour({...newTour,
-                cities:[...newTour.cities, val]
+                cites:[...newTour.cites, val]
               })
         }}
         onRemoveItems={(val)=>{
          setNewTour({
           ...newTour,
-          cities:newTour.cities.filter((city)=>city!= val),
+          cites:newTour.cites.filter((city)=>city!= val),
          })
         }}/>
  
+       <Input
+          type="date"
+          placeholder="Enter Start Date"
+          value={newTour.startDate}
+          onChange={(e) =>
+            setNewTour({ ...newTour, startDate: e.target.value })
+          }
+        />
+        <Input
+          type="date"
+          placeholder="Enter end date"
+          value={newTour.endDate}
+          onChange={(e) =>
+            setNewTour({ ...newTour, endDate: e.target.value })
+          }
+        />
 
+        <Button title={"Add Tour"} variant='primary' size='lg'
+        onClick={()=>{
+          addTour();
+        }}/>
       </div>
     </div>
   );

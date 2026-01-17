@@ -29,7 +29,9 @@ function MultiSelect({selectedItems,placeholder, onRemoveItems, onAddItem}) {
                }}
                onKeyDown={(e)=>{
                 if(e.key=== 'Enter'){
-                  onAddItem(e.target.value)
+                  if(e.target.value!=""){
+                    onAddItem(e.target.value)
+                  }
                   setNewItem("")
                 }
 
