@@ -1,6 +1,7 @@
 import { Building2 } from 'lucide-react'
 import React from 'react'
 import Avtar from './Avtar';
+import PhotoViewer from './PhotoViewer';
 
 function TourCard({id, title, description,cites, photos, user, startAt, endAt, updatedAt}) {
     const {name, email}=user;
@@ -31,10 +32,7 @@ function TourCard({id, title, description,cites, photos, user, startAt, endAt, u
              {
                 photos.map((photo, index)=>{
                     return (
-                        <img
-                        src={photo}
-                        alt={`Tour Photo ${index+1}`}
-                        className='w-25 h-auto mt-2 rounded-md object-cover mx-1 cursor-pointer'/>
+                       <PhotoViewer imgUrl={photo} index={index}/>
 
                     )
                 })
