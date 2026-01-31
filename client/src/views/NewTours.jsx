@@ -70,6 +70,7 @@ function NewTours() {
                     },
                 });
                 console.log("Upload response:", uploadResponse);
+                setNewTour({...newTour, photos:[newTour.photos, uploadResponse.url]})
             } catch (error) {
                 if (error instanceof ImageKitAbortError) {
                     console.error("Upload aborted:", error.reason);
@@ -157,6 +158,9 @@ function NewTours() {
             setNewTour({ ...newTour, endDate: e.target.value })
           }
         />
+        <input  type='file' ref={fileInputRef}
+        className='border border-[#E5E7EB] m-2 px-4 text-[17px] text-[#111827] py-1 rounded-xl focus:outline-1 outline-[#2563EB] w-full'
+        onChange={ handleUpload}/>
 
         <Button title={"Add Tour"} variant='primary' size='lg'
         onClick={()=>{
