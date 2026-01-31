@@ -5,6 +5,7 @@ import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast';
 import {Plus} from 'lucide-react'
 import { Link } from 'react-router';
+import TourCard from '../components/TourCard';
 
 function DashBoard() {
     const [tours, setTours] = useState([]);
@@ -29,8 +30,14 @@ function DashBoard() {
     return (
         <div>
             <Navbar />
+             <div className='bg-[#FFFFFF] min-h-screen w-2/3 mx-auto'>
 
-            dashboard
+            {
+                tours.map((item, index)=>{
+                    return <TourCard key={index} {...item}/>
+                })
+            }
+            </div>
        <Link to={"/tours/new"} className='fixed bottom-10 right-10 flex gap-2 p-4 font-bold rounded-2xl bg-[#22C55E]'>
           <Plus /> Add Tours
        </Link>
