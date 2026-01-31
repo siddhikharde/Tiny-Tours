@@ -27,6 +27,19 @@ function TourCard({id, title, description,cites, photos, user, startAt, endAt, u
                 <Avtar name={name} size='sm'/><strong>{name}</strong> {email} 
             </div>
             </p>
+           <div className='flex overflow-x-auto scroll-auto'>
+             {
+                photos.map((photo, index)=>{
+                    return (
+                        <img
+                        src={photo}
+                        alt={`Tour Photo ${index+1}`}
+                        className='w-25 h-auto mt-2 rounded-md object-cover mx-1 cursor-pointer'/>
+
+                    )
+                })
+            }
+           </div>
     </div> 
   )
 }
