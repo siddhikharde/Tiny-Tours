@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
+import { X } from 'lucide-react';
 
 function PhotoPriview({imgUrl, show, onclose }){
     if(!show) return null;
@@ -8,7 +9,7 @@ function PhotoPriview({imgUrl, show, onclose }){
             <span
             onClick={onclose} 
             className='text-white absolute top-5 right-5 text-3xl cursor-pointer'>
-                x
+               <X />
 
             </span>
  <img
