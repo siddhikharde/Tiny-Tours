@@ -7,6 +7,7 @@ import { checkJwtToken } from './middleware/jwt.js';
 import { getHealth,getHome } from './controllers/home.js';
 import { postLogin,postSignUp } from './controllers/aouth.js';
 import { postTours, getTours, putTours } from './controllers/tours.js';
+import ImageKit from '@imagekit/nodejs'
 
 dotenv.config();
 
@@ -15,11 +16,20 @@ app.use(cors());
 app.use(express.json());
 const PORT=process.env.PORT||3000;
 
+const client = new ImageKit({
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY
+});
+
+app.get('/auth', function (req, res) {
+  const { token, expire, signature } = client.helper.getAuthenticationParameters();
+  res.send({ token, expire, signature, publicKey: process.env.IMAGEKIT_PUBLIC_KEY });
+});
+
 app.get('/',getHome);
 app.get('/health',getHealth);
 
 app.post('/signUp',postSignUp )
- app.post('/login',postLogin )
+app.post('/login',postLogin )
 
 app.post('/tours',checkJwtToken, postTours )
 app.get('/tours', checkJwtToken, getTours )

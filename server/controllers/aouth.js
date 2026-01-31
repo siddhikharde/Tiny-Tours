@@ -67,7 +67,7 @@ const postLogin=async (req, res)=>{
     if(!email || !password){
         return res.json({
             success:false,
-            message:"email and passwoed are requirde"
+            message:"email and passwoed are required"
         })
     }
     const existingUser=await User.findOne({email});
@@ -91,7 +91,7 @@ const postLogin=async (req, res)=>{
         return res.json({
             success:true,
             data:existingUser,
-            message:"user login succesfull",
+            message:"user login successful",
             token:jwtToken
         })
     }else{
