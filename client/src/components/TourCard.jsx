@@ -23,11 +23,11 @@ function TourCard({id, title, description,cites, photos, user, startAt, endAt, u
                 })
             }
         </p>
-        <p className='flex gap-2'>
+        <div className='flex gap-2'>
             Posted by:<div className='flex gap-1 '>
                 <Avtar name={name} size='sm'/><strong>{name}</strong> {email} 
             </div>
-            </p>
+            </div>
            <div className='flex overflow-x-auto scroll-auto'>
              {
                 photos.map((photo, index)=>{
