@@ -13,6 +13,7 @@ import {
     ImageKitUploadNetworkError,
     upload,
 } from "@imagekit/react";
+import PhotoViewer from '../components/PhotoViewer';
 
 
 function NewTours() {
@@ -70,7 +71,8 @@ function NewTours() {
                     },
                 });
                 console.log("Upload response:", uploadResponse);
-                setNewTour({...newTour, photos:[newTour.photos, uploadResponse.url]})
+                setNewTour({...newTour, photos:[...newTour.photos, uploadResponse.url]});
+                fileInputRef.current.value = "";
             } catch (error) {
                 if (error instanceof ImageKitAbortError) {
                     console.error("Upload aborted:", error.reason);
@@ -158,9 +160,21 @@ function NewTours() {
             setNewTour({ ...newTour, endDate: e.target.value })
           }
         />
+        <div>
+          {
+            newTour.photos.length>0 && newTour.photos.map((photo, index)=>(
+             <PhotoViewer key={index} imgUrl={photo}/>
+            ))
+          }
+          {progress}%
+        </div>
         <input  type='file' ref={fileInputRef}
         className='border border-[#E5E7EB] m-2 px-4 text-[17px] text-[#111827] py-1 rounded-xl focus:outline-1 outline-[#2563EB] w-full'
-        onChange={ handleUpload}/>
+        onChange={(e)=>{
+          if(e.target.files.length>0){
+            handleUpload();
+          }
+        }}/>
 
         <Button title={"Add Tour"} variant='primary' size='lg'
         onClick={()=>{
