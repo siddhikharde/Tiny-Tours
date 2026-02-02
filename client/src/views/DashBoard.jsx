@@ -11,7 +11,7 @@ function DashBoard() {
     const [tours, setTours] = useState([]);
     const loadTours = async () => {
  const jwtToken = getUserJwtToken()
-        const res = await axios.get("http://localhost:5000/tours", {
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}tours`, {
             headers: {
                 Authorization: `Bearer ${jwtToken} `
             }

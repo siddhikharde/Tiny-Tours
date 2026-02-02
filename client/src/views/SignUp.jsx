@@ -19,7 +19,7 @@ function SignUp() {
     password: ""
   });
   const createUser = async () => {
-    const response = await axios.post("http://localhost:5000/signUp", newUser);
+    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}signUp`, newUser);
     if (response.data.success) {
       toast.success(response.data.message || "Account Created Successfully", { id: "SignUpSuccess" });
       setNewUser({
