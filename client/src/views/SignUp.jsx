@@ -5,6 +5,7 @@ import  toast,{ Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import { Link } from 'react-router';
 import {SetPageTitle} from '/Utils.jsx';
+import Navbar from '../components/Navbar';
 function SignUp() {
   useEffect(()=>{
     SetPageTitle({title:"SignUp"});
@@ -32,7 +33,8 @@ function SignUp() {
     }
   }
   return (
-    <div className='bg-[#FFFFFF] min-h-screen'>
+    <div className='min-h-screen'>
+      <Navbar/>
       <div className='flex flex-col gap-3 w-[90%] md:w-[450px] border border-2 border-[#CBD5E1] rounded-xl m-5 shadow-2xl justify-center items-center mx-auto md:p-8 p-5'>
 
         <h1 className='text-[#0F172A] my-2 text-2xl font-bold'>Create Account</h1>

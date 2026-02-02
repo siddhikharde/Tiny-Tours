@@ -3,7 +3,7 @@ import React from 'react'
 import Avtar from './Avtar';
 import PhotoViewer from './PhotoViewer';
 
-function TourCard({ id, title, description, cites, photos, user, startDate, endDate, updatedAt }) {
+function TourCard({ id, title, description, cites, photos, user, startDate, endDate }) {
     const { name, email } = user;
     return (
         <div className='border bg-white border-gray-200 rounded-xl p-4 m-4 shadow-sm md:hover:shadow-lg transition-shadow duration-300'>

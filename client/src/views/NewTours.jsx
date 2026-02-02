@@ -172,7 +172,7 @@ function NewTours() {
             ))
           }
         </div>
-          {progress}%
+          {progress<100 && progress !== 0 ?(<span className='text-sm text-blue-600'>Uploading {progress}%</span>):""}
         </div>
         <input  type='file' ref={fileInputRef}
         className='border border-[#E5E7EB] m-2 px-4 text-[17px] text-[#111827] py-1 rounded-xl focus:outline-1 outline-[#2563EB] w-full'

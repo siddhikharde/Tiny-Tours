@@ -41,7 +41,6 @@ function PhotoViewer({ imgUrl, index, showDelete = false, onDelete }) {
     object-cover
     cursor-pointer
     border border-gray-200
-    hover:scale-105
     hover:shadow-lg
     transition-all
     duration-300
