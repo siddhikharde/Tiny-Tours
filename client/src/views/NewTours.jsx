@@ -29,7 +29,7 @@ function NewTours() {
    const fileInputRef = useRef();
  const authenticator = async () => {
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}auth`);
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth`);
             if (!response.ok) {
                 const errorText = await response.text();
                 throw new Error(`Request failed with status ${response.status}: ${errorText}`);
@@ -91,7 +91,7 @@ function NewTours() {
     const jwtToken=getUserJwtToken();
     console.log(jwtToken)
       const res = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}tours`,
+        `${import.meta.env.VITE_API_BASE_URL}/tours`,
         newTour,
         {
           headers: {
