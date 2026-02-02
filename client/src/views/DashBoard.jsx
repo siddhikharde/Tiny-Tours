@@ -28,9 +28,9 @@ function DashBoard() {
             loadTours();
     }, [])
     return (
-        <div>
+        <div >
             <Navbar />
-             <div className='bg-[#FFFFFF] min-h-screen w-2/3 mx-auto'>
+             <div className='min-h-screen md:w-2/3 w-full mx-auto'>
 
             {
                 tours.map((item, index)=>{
