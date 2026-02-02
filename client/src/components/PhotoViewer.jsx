@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-import { X } from 'lucide-react';
+import { X, Trash } from 'lucide-react';
 
 function PhotoPriview({imgUrl, show, onclose }){
     if(!show) return null;
@@ -20,10 +20,19 @@ function PhotoPriview({imgUrl, show, onclose }){
     )
 
 }
-function PhotoViewer({imgUrl , index}) {
+
+function PhotoViewer({imgUrl , index, showDelete=false, onDelete}) {
     const [showPriview, setShowPrieview]=useState(false);
   return (
-    <> <img
+    <div className="relative shadow-md m-1  rounded-xl"> 
+    {
+        showDelete && (
+            <span className='absolute right-2 top-2 h-5 text-red-600 cursor-pointer' onClick={()=>{
+                onDelete(imgUrl);
+            }}><Trash size={14}/></span>
+        )
+    }
+    <img
                         src={imgUrl}
                         alt={`Tour Photo ${index+1}`}
                         className='w-25 h-auto mt-2 rounded-md object-cover mx-1 cursor-pointer'
@@ -34,7 +43,7 @@ function PhotoViewer({imgUrl , index}) {
     setShowPrieview(false)
 
    }}/>
- </> )
+ </div> )
   
 }
 

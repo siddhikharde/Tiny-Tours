@@ -160,12 +160,18 @@ function NewTours() {
             setNewTour({ ...newTour, endDate: e.target.value })
           }
         />
-        <div>
-          {
+        <div className='w-full flex flex-col'>
+        <div className='flex items-center justify-start w-full'>
+            {
             newTour.photos.length>0 && newTour.photos.map((photo, index)=>(
-             <PhotoViewer key={index} imgUrl={photo}/>
+             <PhotoViewer key={index} imgUrl={photo} showDelete={true} onDelete={(url)=>{
+              setNewTour({...newTour,
+                photos:newTour.photos.filter((p)=>p!== url)
+              })
+             }}/>
             ))
           }
+        </div>
           {progress}%
         </div>
         <input  type='file' ref={fileInputRef}
