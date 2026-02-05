@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar'
 import bgImg from '../assets/hero-bg.jpg'
 import Button from '../components/Button'
 import { useNavigate } from 'react-router'
+import Footer from '../components/Footer'
 function Home() {
   const navigate = useNavigate();
   return (
@@ -17,7 +18,7 @@ function Home() {
           <Button title="Create Tour" variant='primary' onClick={() => navigate("/tours/new")} />
         </div>
       </div>
-
+  <Footer/>
     </div>
   )
 }

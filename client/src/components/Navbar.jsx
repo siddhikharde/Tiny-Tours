@@ -21,12 +21,12 @@ function Navbar() {
     }
   return (
     <div>
-      <div className='bg-[#FFFFFF] flex justify-between items-center px-3 md:px-7'>
+      <div className='bg-[#F8FAFC] flex justify-between items-center px-3 md:px-7 text-[#1F2933] h-16'>
       <Link to={"/"}> <img src={logoImg} alt="Tiny Tours"  className='h-18 cursor-pointer'/></Link> 
         <div>
             
             {userData.name?(
-                <div className='flex items-center justify-center gap-2 '>
+                <div className='flex items-center justify-center gap-2 text-[#1F2933] '>
                 <Avtar name={userData.name} size='lg'/>
                     <h2 className='md:flex cursor-pointer items-center hidden justify-center text-xl text-[#0F172A] font-bold'> 
                 {`Hello! ${userData.name.split(" ")[0]}`} </h2>

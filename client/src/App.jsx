@@ -7,6 +7,7 @@ import SignUp from './views/SignUp'
 import Login from './views/Login'
 import DashBoard from './views/DashBoard'
 import NewTours from './views/NewTours'
+import Profile from './views/Profile'
 function App() {
   return (
    <>
@@ -19,6 +20,7 @@ function App() {
       <Route path='/tours/new' element={<NewTours/>}/>
       <Route path='/signUp' element={<SignUp/>}/>
       <Route path='/login' element={<Login/>}/>
+      <Route path='/profile' element={<Profile/>}/>
     </Routes>
    </BrowserRouter>
    </>
