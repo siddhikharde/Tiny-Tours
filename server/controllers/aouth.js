@@ -6,7 +6,7 @@ import JWT_EXPIRATION from '../config.js';
 
 dotenv.config();
 const postSignUp=async (req, res)=>{
-    const {name, email, phone, city, country, password}=req.body;
+    const {name, email, phone, city, country, password, profilePhoto}=req.body;
     const salt = bcrypt.genSaltSync(10);
     const encryptedPassword=bcrypt.hashSync(password,salt)
           const newUser = new User({
@@ -15,6 +15,7 @@ const postSignUp=async (req, res)=>{
         phone,
         city,
         country,
+        profilePhoto,
         password:encryptedPassword
        })
        if(!name){

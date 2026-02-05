@@ -19,6 +19,10 @@ const userScheama=new Schema({
     country:{
         type:String
     },
+    profilePhoto:{
+        type:String,
+        default:""
+    },
     password:{
         type:String,
         required:true
