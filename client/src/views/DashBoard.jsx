@@ -28,22 +28,47 @@ function DashBoard() {
             loadTours();
     }, [])
     return (
-        <div >
-            <Navbar />
-             <div className='min-h-screen md:w-2/3 w-full mx-auto'>
+  <div className="min-h-screen bg-gradient-to-br from-slate-100 via-gray-50 to-slate-200">
+    <Navbar />
 
-            {
-                tours.map((item, index)=>{
-                    return <TourCard key={index} {...item}/>
-                })
-            }
-            </div>
-       <Link to={"/tours/new"} className='fixed bottom-10 right-10 flex gap-2 p-4 font-bold rounded-2xl bg-[#22C55E]'>
-          <Plus /> Add Tours
-       </Link>
-            <Toaster />
-        </div>
-    )
+    {/* Page Container */}
+    <div className="max-w-6xl mx-auto px-4 py-10">
+
+      {/* Header */}
+      <div className="flex items-center justify-between mb-10">
+        <h1 className="text-4xl font-bold tracking-tight text-slate-800">
+          Your Tours ✈️
+        </h1>
+
+        <span className="text-sm text-slate-500">
+          {tours.length} tour{tours.length !== 1 && "s"}
+        </span>
+      </div>
+
+      {/* Tours List */}
+      <div className="space-y-6">
+        {tours.map((item, index) => (
+          <TourCard key={index} {...item} />
+        ))}
+      </div>
+    </div>
+
+    {/* Floating Add Button */}
+    <Link
+      to="/tours/new"
+      className="group fixed bottom-8 right-8 flex items-center gap-3 px-6 py-4 font-semibold rounded-2xl
+                 bg-gradient-to-r from-emerald-500 to-green-500 text-white
+                 shadow-xl shadow-green-200 hover:shadow-green-300
+                 hover:scale-105 transition-all"
+    >
+      <Plus className="group-hover:rotate-90 transition" />
+      Add Tour
+    </Link>
+
+    <Toaster />
+  </div>
+);
+
 }
 
 export default DashBoard
