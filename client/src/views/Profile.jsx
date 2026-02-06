@@ -64,7 +64,6 @@ function Profile() {
               alt="Profile"
               className=""
             />
-          
           </div>
         </div>
 
