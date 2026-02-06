@@ -1,30 +1,45 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar';
-
+import axios from 'axios';
+import toast from 'react-hot-toast';
 function Profile() {
-    const userData=JSON.parse(localStorage.getItem("userData"));
     const [user, setUser]=useState({
         name:"",
         email:"",
         country:"",
         city:"",
+        profilePhoto:""
     })
 
+    const getUser=async()=>{
+        const token=localStorage.getItem("JwtToken");
+        const res=await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user`,{
+            headers:{
+                Authorization:`Bearer ${token}`
+    }}     )
+
+    if(res.data.success===true){
+        toast.success(res.data.message);
+    }    else{
+        toast.error(res.data.message);
+    }
+
+    const data=res.data?.data;
+    if(!data){
+        window.location.href="/login";
+    }
+    setUser({
+        name:data.name,
+        email:data.email,
+        country:data.country,
+        city:data.city,
+        profilePhoto:data.profilePhoto,
+    })
+    }
     useEffect(()=>{
-        if(!userData.name){
-            window.location.href="/login";
-        }else{
-            setUser({
-                name:userData.name,
-                email:userData.email,
-                country:userData.country,
-                city:userData.city,
-            });
-            console.log(user);
-        }
-
-
-
+       
+            getUser();
+      
     },[])
   return (
     <div>
