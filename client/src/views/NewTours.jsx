@@ -112,7 +112,6 @@ function NewTours() {
       <Navbar />
 
       <div className='flex flex-col gap-3 w-[90%] md:w-[450px] border border-[#CBD5E1] rounded-xl m-5 shadow-2xl justify-center items-center mx-auto md:p-8 p-5'>
-
         <Input
           type="text"
           placeholder="Add Tour Title"

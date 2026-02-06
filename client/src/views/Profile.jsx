@@ -43,61 +43,61 @@ function Profile() {
         getUser();
 
     }, [])
-   return (
-  <div className="min-h-screen bg-gray-100">
+  return (
+  <div className="min-h-screen bg-gradient-to-br from-slate-100 via-gray-50 to-slate-200">
     <Navbar />
 
-    <div className="max-w-6xl mx-auto px-4 py-10">
-      <h1 className="text-4xl font-extrabold text-gray-800 mb-10">
-        Welcome, <span className="text-indigo-600">{user.name || "User"}</span> 
+    <div className="max-w-6xl mx-auto px-4 py-14">
+      <h1 className="text-5xl font-bold tracking-tight text-slate-800 mb-12">
+        Welcome,{" "}
+        <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
+          {user.name || "User"}
+        </span>
       </h1>
 
-      <div className="bg-white rounded-2xl shadow-xl p-8 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+      <div className="relative bg-white/80 backdrop-blur-xl rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.08)] p-10 grid grid-cols-1 md:grid-cols-3 gap-10 items-center border border-white/40">
+
         <div className="flex justify-center">
-          <div className="relative w-44 h-44 cursor-pointer rounded-full object-cover border-4 border-indigo-500 shadow-md overflow-hidden">
+          <div className="group relative w-48 h-48 rounded-full object-cover overflow-hidden border-[5px] border-indigo-400 shadow-lg cursor-pointer transition-all hover:scale-[1.03]">
             <img
               src={user.profilePhoto}
               alt="Profile"
+              className=""
             />
-            <span className="absolute bottom-2 right-2 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></span>
+          
           </div>
         </div>
 
-        <div className="md:col-span-2 space-y-5">
-          <div className="flex items-center gap-3">
-            <span className="text-gray-500 font-medium w-24">Name</span>
-            <span className="text-lg font-semibold text-gray-800">
-              {user.name}
-            </span>
-          </div>
+        <div className="md:col-span-2 space-y-6">
+          {[
+            ["Name", user.name],
+            ["Email", user.email],
+            ["Country", user.country],
+            ["City", user.city],
+          ].map(([label, value]) => (
+            <div
+              key={label}
+              className="flex items-center gap-6 bg-white rounded-xl px-6 py-4 shadow-sm hover:shadow-md transition"
+            >
+              <span className="text-sm uppercase tracking-wider text-slate-400 w-24">
+                {label}
+              </span>
+              <span className="text-lg font-medium text-slate-700">
+                {value}
+              </span>
+            </div>
+          ))}
 
-          <div className="flex items-center gap-3">
-            <span className="text-gray-500 font-medium w-24">Email</span>
-            <span className="text-lg text-gray-700">{user.email}</span>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span className="text-gray-500 font-medium w-24">Country</span>
-            <span className="text-lg text-gray-700">{user.country}</span>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span className="text-gray-500 font-medium w-24">City</span>
-            <span className="text-lg text-gray-700">{user.city}</span>
-          </div>
-
-          <div className="pt-6 flex gap-4">
-            <Button title="Edit Profile" size='md' />
-              
-            <Button title="Change Photo" size='md' variant='secondary'/>
-            
-            
+          <div className="pt-8 flex flex-wrap gap-4">
+            <Button title="Edit Profile" size="md" />
+            <Button title="Change Photo" size="md" variant="secondary" />
           </div>
         </div>
       </div>
     </div>
   </div>
 );
+
 }
 
 export default Profile
