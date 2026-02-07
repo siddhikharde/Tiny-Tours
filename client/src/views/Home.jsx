@@ -39,6 +39,26 @@ function Home() {
         </div>
       </div>
 
+      <div className="max-w-7xl mx-auto px-6 py-20">
+        <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">
+          Why TripNest?
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          {features.map((item, i) => (
+            <div
+              key={i}
+              className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition"
+            >
+              <h3 className="text-xl font-semibold text-indigo-600 mb-3">
+                {item.title}
+              </h3>
+              <p className="text-gray-600">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
     </div>
   );
 }
