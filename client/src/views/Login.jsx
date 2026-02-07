@@ -1,66 +1,119 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Input from '../components/Input'
-import {SetPageTitle} from '/Utils.jsx';
 import Button from '../components/Button'
-import toast, {Toaster} from 'react-hot-toast'
+import Navbar from '../components/Navbar'
+import toast, { Toaster } from 'react-hot-toast'
 import axios from 'axios'
-import {Link} from 'react-router'
-import Navbar from '../components/Navbar';
+import { Link, useNavigate } from 'react-router'
+import { SetPageTitle } from '/Utils.jsx'
+
 function Login() {
-    useEffect(()=>{
-    SetPageTitle({title:"Login"})
-  },[]);
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    SetPageTitle({ title: "Login" })
+  }, [])
 
   const [loginUser, setLoginUser] = useState({
     email: "",
     password: ""
-  });
-    const checkLoginUser=async()=>{
-    const response=await axios.post(`${import.meta.env.VITE_API_BASE_URL}/login`, loginUser);
-    if(response.data.success){
-      toast.success(response.data.message || "Login Successful");
-      setLoginUser({
-        email:"",
-        password:""
-      })
+  })
 
-      const {token, data}=response.data;
-      localStorage.setItem("JwtToken", token);
-      localStorage.setItem("userData", JSON.stringify(data));
-      
-      setTimeout(()=>{
-      window.location.href=("/dashBoard")
-      }, 1500)
+  const [loading, setLoading] = useState(false)
 
-    }else{
-      toast.error(response.data.message || "Invalid email or password.");
+  const checkLoginUser = async () => {
+    if (!loginUser.email || !loginUser.password) {
+      toast.error("Please fill all fields")
+      return
+    }
+
+    try {
+      setLoading(true)
+
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/login`,
+        loginUser
+      )
+
+      if (response.data.success) {
+        toast.success(response.data.message || "Login Successful")
+
+        const { token, data } = response.data
+        localStorage.setItem("JwtToken", token)
+        localStorage.setItem("userData", JSON.stringify(data))
+
+        setLoginUser({ email: "", password: "" })
+
+        setTimeout(() => {
+          navigate("/dashboard")
+        }, 1200)
+      } else {
+        toast.error(response.data.message || "Invalid email or password")
+      }
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message || "Something went wrong. Try again."
+      )
+      console.error(error)
+    } finally {
+      setLoading(false)
     }
   }
+
   return (
-    <div className=' min-h-screen'>
-      <Navbar/>
-      <h1 className='text-center p-2 mt-5 text-4xl font-bold text-[#0F172A]' >Welcome Back</h1>
-      <p className='text-center text-[15px] text-gray-500'>Login to continue your journey</p>
-      <div className='flex flex-col mt-10 gap-3 w-[90%] md:w-[450px] border border-2 border-[#CBD5E1] rounded-xl m-5 shadow-2xl justify-center items-center mx-auto md:p-8 p-5'>
-        <div className='flex gap-1 flex-col justify-center items-start w-full '>
-          <h2 className='px-3 text-[16px] '>Email</h2>
-          <Input type='email' placeholder={"Enter Your Email"} value={loginUser.email} onChange={(e) => {
-            setLoginUser({ ...loginUser, email: e.target.value })
-          }} />
-        </div>
-        <div className='flex gap-1 flex-col justify-center items-start w-full '>
-          <h2 className='px-3 text-[16px] '>Password</h2>
-          <Input type='password' placeholder={"Enter Password"} value={loginUser.password} onChange={(e) => {
-            setLoginUser({ ...loginUser, password: e.target.value })
-          }} />
-        </div>
-        <Button title={"Login"} variant={"primary"} size={"md"} onClick={() => {
-           checkLoginUser();
-        }} />
-        <Link to={"/signUp"} className='text-[15px] text-blue-900'>Don't have an Account ? Sign Up</Link>
+    <div className="min-h-screen bg-[#F8FAFC]">
+      <Navbar />
+
+      <div className="mt-10 text-center">
+        <h1 className="text-4xl font-bold text-[#0F172A]">Welcome Back</h1>
+        <p className="text-sm text-gray-500 mt-1">
+          Login to continue your journey
+        </p>
       </div>
-      <Toaster/>
+
+      <div className="flex flex-col gap-4 w-[90%] md:w-[420px] border border-[#CBD5E1] rounded-xl shadow-xl mx-auto mt-10 p-6 bg-white">
+
+        <div className="flex flex-col gap-1">
+          <label className="text-sm font-medium">Email</label>
+          <Input
+            type="email"
+            placeholder="Enter your email"
+            value={loginUser.email}
+            onChange={(e) =>
+              setLoginUser({ ...loginUser, email: e.target.value })
+            }
+          />
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <label className="text-sm font-medium">Password</label>
+          <Input
+            type="password"
+            placeholder="Enter your password"
+            value={loginUser.password}
+            onChange={(e) =>
+              setLoginUser({ ...loginUser, password: e.target.value })
+            }
+          />
+        </div>
+
+        <Button
+          title={loading ? "Logging in..." : "Login"}
+          variant="primary"
+          size="md"
+          disabled={loading}
+          onClick={checkLoginUser}
+        />
+
+        <p className="text-sm text-center text-gray-600">
+          Don&apos;t have an account?{" "}
+          <Link to="/signUp" className="text-blue-700 font-medium hover:underline">
+            Sign Up
+          </Link>
+        </p>
+      </div>
+
+      <Toaster />
     </div>
   )
 }

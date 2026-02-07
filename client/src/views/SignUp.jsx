@@ -105,7 +105,7 @@ function SignUp() {
     }
   }
   return (
-    <div className='min-h-screen'>
+    <div className="min-h-screen bg-[#F8FAFC]">
       <Navbar />
       <div className='flex flex-col gap-3 w-[90%]  border border-2 border-[#CBD5E1] rounded-xl m-5 shadow-2xl justify-center items-center mx-auto md:p-8 p-5'>
 
