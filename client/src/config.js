@@ -13,4 +13,10 @@ const features=[
             },
 ]
 
-export {features}
+const steps=[
+              "Create an account and set up your profile",
+              "Post your tour with photos and details",
+              "Explore trips shared by others",
+            ]
+
+export {features, steps}
