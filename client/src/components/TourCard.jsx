@@ -9,17 +9,14 @@ function TourCard({ id, title, description, cites, photos, user, startDate, endD
     return (
         <div className="group bg-white/90 backdrop-blur rounded-2xl p-5 m-4 border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
 
-            {/* Title */}
             <h2 className="text-2xl font-bold text-gray-800 group-hover:text-indigo-600 transition">
                 {title}
             </h2>
 
-            {/* Description */}
             <p className="text-gray-600 text-sm mt-1 leading-relaxed">
                 {description}
             </p>
 
-            {/* Dates */}
             <div className="text-sm text-gray-500 mt-3 flex flex-wrap items-center gap-2">
                 <Footprints size={16} />
                 <span>
@@ -32,7 +29,6 @@ function TourCard({ id, title, description, cites, photos, user, startDate, endD
                 </span>
             </div>
 
-            {/* Cities */}
             <div className="flex items-start gap-2 mt-3">
                 <Building2 size={16} className="mt-1 text-gray-500" />
 
@@ -48,7 +44,6 @@ function TourCard({ id, title, description, cites, photos, user, startDate, endD
                 </div>
             </div>
 
-            {/* Photos */}
             <div className="w-full overflow-x-auto py-3 mt-2">
                 <div className="flex gap-3 min-w-max">
                     {photos?.map((photo, index) => (
@@ -63,10 +58,8 @@ function TourCard({ id, title, description, cites, photos, user, startDate, endD
                 </div>
             </div>
 
-            {/* Divider */}
             <div className="border-t border-gray-100 mt-4 pt-3"></div>
 
-            {/* User */}
             <div className="flex items-center gap-3 text-sm text-gray-600">
                 <span className="font-medium text-gray-500">Posted by</span>
 

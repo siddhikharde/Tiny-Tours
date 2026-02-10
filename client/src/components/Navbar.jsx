@@ -8,58 +8,48 @@ import Avtar from "./Avtar.jsx";
 
 function Navbar() {
   const navigate = useNavigate();
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    setUserData(getUserData());
+    const data = getUserData();
+    setUserData(data);
   }, []);
 
   const logout = () => {
     localStorage.clear();
-    toast.error("Logout Successfully.");
+    toast.success("Logged out successfully");
     setTimeout(() => {
       navigate("/login");
-    }, 1500);
+    }, 1200);
   };
 
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-slate-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
-        
-        {/* Logo */}
+
         <Link to="/" className="flex items-center gap-2">
-          <img
-            src={logoImg}
-            alt="Tiny Tours"
-            className="h-10 cursor-pointer hover:scale-105 transition"
-          />
+      
+          <span className="text-xl font-bold tracking-wide bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
+            TripNest
+          </span>
         </Link>
 
-        {/* Right Section */}
         <div className="flex items-center gap-6">
-          {userData.name ? (
+          {userData?.name ? (
             <>
-              {/* Nav Links */}
               <div className="hidden md:flex items-center gap-6 text-slate-700 font-medium">
-                <Link
-                  to="/dashboard"
-                  className="hover:text-indigo-600 transition"
-                >
+                <Link to="/dashboard" className="hover:text-indigo-600 transition">
                   Dashboard
                 </Link>
-                <Link
-                  to="/profile"
-                  className="hover:text-indigo-600 transition"
-                >
+                <Link to="/profile" className="hover:text-indigo-600 transition">
                   Profile
                 </Link>
               </div>
 
-              {/* User Info */}
               <div className="flex items-center gap-3">
                 <Avtar name={userData.name} size="lg" />
                 <h2 className="hidden md:block text-slate-800 font-semibold">
-                  {`Hi, ${userData.name.split(" ")[0]}`}
+                  Hi, {userData.name.split(" ")[0]}
                 </h2>
                 <Button
                   title="Logout"
