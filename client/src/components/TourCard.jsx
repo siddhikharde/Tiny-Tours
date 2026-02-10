@@ -7,13 +7,13 @@ function TourCard({ id, title, description, cites, photos, user, startDate, endD
     const { name, email } = user;
 
     return (
-        <div className="group bg-white/90 backdrop-blur rounded-2xl p-5 m-4 border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+        <div className="border bg-white border-gray-200 rounded-xl p-4 m-4 shadow-sm md:hover:shadow-lg transition-shadow duration-300">
 
-            <h2 className="text-2xl font-bold text-gray-800 group-hover:text-indigo-600 transition">
+            <h2 className="text-2xl font-bold text-gray-800">
                 {title}
             </h2>
 
-            <p className="text-gray-600 text-sm mt-1 leading-relaxed">
+            <p className="text-gray-600 text-sm mt-1 ">
                 {description}
             </p>
 
@@ -47,13 +47,11 @@ function TourCard({ id, title, description, cites, photos, user, startDate, endD
             <div className="w-full overflow-x-auto py-3 mt-2">
                 <div className="flex gap-3 min-w-max">
                     {photos?.map((photo, index) => (
-                        <div className="rounded-xl overflow-hidden hover:scale-105 transition">
-                            <PhotoViewer
-                                key={photo || index}
-                                imgUrl={photo}
-                                index={index}
-                            />
-                        </div>
+                        <PhotoViewer
+                            key={`${id}-photo-${index}`}
+                            imgUrl={photo}
+                            index={index}
+                        />
                     ))}
                 </div>
             </div>
@@ -73,4 +71,4 @@ function TourCard({ id, title, description, cites, photos, user, startDate, endD
     );
 }
 
-export default TourCard
+export default TourCard;
