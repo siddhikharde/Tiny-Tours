@@ -1,14 +1,17 @@
-import { Building2, Footprints, FlagTriangleRight } from 'lucide-react'
+import { Building2, Footprints, FlagTriangleRight, Pencil } from 'lucide-react'
 import React from 'react'
 import Avtar from './Avtar';
 import PhotoViewer from './PhotoViewer';
-
-function TourCard({ id, title, description, cites, photos, user, startDate, endDate }) {
-    const { name, email } = user;
-
+import { useNavigate , Link} from 'react-router';
+function TourCard({ _id, title, description, cites, photos, user, startDate, endDate }) {
+    const { name, email , _id: userId} = user;
+    const navigate=useNavigate();
     return (
-        <div className="border bg-white border-gray-200 rounded-xl p-4 m-4 shadow-sm md:hover:shadow-lg transition-shadow duration-300">
+        <div className="border relative bg-white border-gray-200 rounded-xl p-4 m-4 shadow-sm md:hover:shadow-lg transition-shadow duration-300">
 
+             <Link to={`/tours/edit/${_id}`} className="absolute right-2 top-2 cursor-pointer">
+              <span className='absolute right-2 top-2 cursor-pointer'><Pencil size={18} /></span>
+              </Link>
             <h2 className="text-2xl font-bold text-gray-800">
                 {title}
             </h2>
@@ -48,7 +51,7 @@ function TourCard({ id, title, description, cites, photos, user, startDate, endD
                 <div className="flex gap-3 min-w-max">
                     {photos?.map((photo, index) => (
                         <PhotoViewer
-                            key={`${id}-photo-${index}`}
+                            key={`${_id}-photo-${index}`}
                             imgUrl={photo}
                             index={index}
                         />

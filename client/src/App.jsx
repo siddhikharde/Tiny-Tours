@@ -8,6 +8,7 @@ import Login from './views/Login'
 import DashBoard from './views/DashBoard'
 import NewTours from './views/NewTours'
 import Profile from './views/Profile'
+import EditTour from './views/EditTour'
 function App() {
   return (
    <>
@@ -21,6 +22,7 @@ function App() {
       <Route path='/signUp' element={<SignUp/>}/>
       <Route path='/login' element={<Login/>}/>
       <Route path='/profile' element={<Profile/>}/>
+      <Route path='/tours/edit/:id' element={<EditTour/>}/>
     </Routes>
    </BrowserRouter>
    </>

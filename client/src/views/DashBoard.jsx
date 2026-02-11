@@ -9,12 +9,9 @@ import TourCard from '../components/TourCard';
 
 function DashBoard() {
     const [tours, setTours] = useState([]);
-    const [loading, setLoading] = useState(true);
-
     const loadTours = async () => {
+        const jwtToken = getUserJwtToken()
         try {
-            setLoading(true);
-            const jwtToken = getUserJwtToken()
             const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/tours`, {
                 headers: {
                     Authorization: `Bearer ${jwtToken}`
@@ -29,46 +26,33 @@ function DashBoard() {
         } catch (error) {
             toast.error("Error loading tours");
             console.error(error);
-        } finally {
-            setLoading(false);
         }
     }
-
     useEffect(() => {
         SetPageTitle({ title: "Dashboard" });
         loadTours();
     }, [])
-
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-100 via-gray-50 to-slate-200">
             <Navbar />
 
             <div className="max-w-6xl mx-auto px-4 py-10">
+
                 <div className="flex items-center justify-between mb-10">
                     <h1 className="text-4xl font-bold tracking-tight text-slate-800">
                         Your Tours
                     </h1>
 
                     <span className="text-sm text-slate-500">
-                        {tours.length} tour{tours.length !== 1 ? "s" : ""}
+                        {tours.length} tour{tours.length !== 1 && "s"}
                     </span>
                 </div>
 
-                {loading ? (
-                    <div className="flex items-center justify-center py-10">
-                        <p className="text-gray-500">Loading tours...</p>
-                    </div>
-                ) : tours.length === 0 ? (
-                    <div className="flex items-center justify-center py-10">
-                        <p className="text-gray-500">No tours yet. Create one to get started!</p>
-                    </div>
-                ) : (
-                    <div className="space-y-6">
-                        {tours.map((item) => (
-                            <TourCard key={item.id} {...item} />
-                        ))}
-                    </div>
-                )}
+                <div className="space-y-6">
+                    {tours.map((item, index) => (
+                        <TourCard key={index} {...item} />
+                    ))}
+                </div>
             </div>
 
             <Link
