@@ -1,10 +1,11 @@
-import React, { useState ,useRef} from 'react'
+import React, { useState ,useRef, useEffect} from 'react'
 import Navbar from '../components/Navbar'
 import Input from '../components/Input'
 import MultiSelect from '../components/MultiSelect';
 import Button from '../components/Button';
 import axios from 'axios'
 import {getUserJwtToken} from '/Utils.jsx'
+import {useNavigate} from 'react-router';
 import toast,{ Toaster } from 'react-hot-toast';
 import {
     ImageKitAbortError,
@@ -14,9 +15,18 @@ import {
     upload,
 } from "@imagekit/react";
 import PhotoViewer from '../components/PhotoViewer';
+import { useParams } from 'react-router';
 
 
 function EditTours() {
+const navigate=useNavigate();
+const {id}=useParams();
+useEffect(()=>{
+  if (id) {
+    getTour();
+  }
+}
+,[])
   const [newTour, setNewTour] = useState({
     title: "",
     description: "",
@@ -25,6 +35,24 @@ function EditTours() {
     cites: [],
     photos: []
   });
+  
+  const getTour=async ()=>{
+    const jwtToken=getUserJwtToken();
+   const res= await axios.get(`${import.meta.env.VITE_API_BASE_URL}/tours/${id}`,{
+    headers:{
+        Authorization:`Bearer ${jwtToken}`
+    }
+   }) 
+   if(res.data.success){
+    const tour = res.data.data;
+
+    setNewTour({
+      ...tour,
+      startDate: tour.startDate?.split("T")[0],
+      endDate: tour.endDate?.split("T")[0]
+    });
+   }
+    }
    const [progress, setProgress] = useState(0);
    const fileInputRef = useRef();
  const authenticator = async () => {
@@ -87,11 +115,13 @@ function EditTours() {
                 }
             }
         };
+
+
   const editTour= async ()=>{
     const jwtToken=getUserJwtToken();
     console.log(jwtToken)
       const res = await axios.put(
-        `${import.meta.env.VITE_API_BASE_URL}/tours/${newTour.id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/tours/${id}`,
         newTour,
         {
           headers: {
@@ -101,7 +131,10 @@ function EditTours() {
       )
 
     if(res.data.success){
-     toast.success(res.data.message);
+     toast.success(res.data.message, {id:"editSuccess"});
+   setTimeout(()=>{
+      navigate("/dashboard");
+   },1000)
     }else{
       toast.error(res.data.message);
     }
@@ -181,13 +214,11 @@ function EditTours() {
           }
         }}/>
 
-        <Button title={"Edit  Tour"} variant='primary' size='lg'
-        onClick={()=>{
-          editTour();
-        }}/>
+        <Button
+  title={"Edit Tour"} variant="primary" size="lg" onClick={editTour}/>
       </div>
     </div>
   );
 }
 
-export default  EditTours;
+export default EditTours;
