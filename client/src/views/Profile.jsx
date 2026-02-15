@@ -87,10 +87,6 @@ function Profile() {
             </div>
           ))}
 
-          <div className="pt-8 flex flex-wrap gap-4">
-            <Button title="Edit Profile" size="md" />
-            <Button title="Change Photo" size="md" variant="secondary" />
-          </div>
         </div>
       </div>
     </div>

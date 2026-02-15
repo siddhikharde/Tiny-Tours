@@ -5,7 +5,7 @@ import Button from '../components/Button'
 import { useNavigate } from 'react-router'
 import Footer from '../components/Footer'
 import { features, steps } from '../config'
-import StepsCard from '../components/stepsCard'
+import StepsCard from '../components/StepsCard'
 import FeatureCard from '../components/FeatureCard'
 function Home() {
   const navigate = useNavigate();
