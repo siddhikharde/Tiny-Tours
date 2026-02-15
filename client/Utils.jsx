@@ -1,5 +1,5 @@
 const SetPageTitle=({title})=> {
-        document.title=`${title} | Tiny Tours`
+        document.title=`${title} | TripNest`
 }
 const isUserLogedIn=()=>{
     const userJwtToken=localStorage.getItem("JwtToken");
