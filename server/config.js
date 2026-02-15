@@ -1,3 +1,3 @@
-const JWT_EXPIRATION='7h'
+const JWT_EXPIRATION='1d';
 
 export default JWT_EXPIRATION;

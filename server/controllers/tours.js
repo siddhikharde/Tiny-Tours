@@ -79,4 +79,23 @@ const putTours=async (req, res)=>{
 
 }
 
-export {postTours,getTours,putTours}
+const getTourById =async (req, res)=>{
+    const {id}=req.params;
+    const tour=await Tour.findById(id).populate("user");
+    if(!tour){
+        return res.json({
+            success:false,
+            message:"tour not found",
+            data:null
+        })
+     }else{
+       return res.json({
+            success:true,
+            message:"tour feched successfully",
+            data:tour,
+        })
+    }
+}
+    
+
+export {postTours,getTours,putTours, getTourById}
