@@ -7,7 +7,7 @@ import { checkJwtToken } from './middleware/jwt.js';
 import { getHealth,getHome } from './controllers/home.js';
 import { postLogin,postSignUp } from './controllers/aouth.js';
 import { postTours, getTours, putTours, getTourById } from './controllers/tours.js';
-import { getUser } from './controllers/user.js';
+import { getUser, updateUser } from './controllers/user.js';
 import ImageKit from '@imagekit/nodejs'
 
 dotenv.config();
@@ -37,6 +37,7 @@ app.get('/tours', checkJwtToken, getTours )
 app.put('/tours/:id',checkJwtToken, putTours)
 app.get('/tours/:id', checkJwtToken, getTourById)
 app.get('/user', checkJwtToken, getUser)
+app.put('/profile', checkJwtToken, updateUser)
 
  app.listen(PORT,()=>{
     console.log(`Server is running on port ${PORT}`);
