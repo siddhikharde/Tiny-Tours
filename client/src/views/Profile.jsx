@@ -1,98 +1,145 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Button from '../components/Button';
+import Input from '../components/Input';
+
 function Profile() {
-    const [user, setUser] = useState({
-        name: "",
-        email: "",
-        country: "",
-        city: "",
-        profilePhoto: ""
-    })
+  const [user, setUser] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    country: '',
+    city: '',
+    profilePhoto: ''
+  });
 
-    const getUser = async () => {
-        const token = localStorage.getItem("JwtToken");
-        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
+  const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-        if (res.data.success === true) {
-            toast.success(res.data.message);
-        } else {
-            toast.error(res.data.message);
+  const token = localStorage.getItem('JwtToken');
+
+  const getUser = async () => {
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
+      });
 
-        const data = res.data?.data;
-        if (!data) {
-            window.location.href = "/login";
-        }
-        setUser({
-            name: data.name,
-            email: data.email,
-            country: data.country,
-            city: data.city,
-            profilePhoto: data.profilePhoto,
-        })
+      if (res.data.success) {
+        setUser(res.data.data);
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (err) {
+      toast.error('Failed to fetch user');
+      window.location.href = '/login';
     }
-    useEffect(() => {
+  };
 
-        getUser();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-    }, [])
+    setUser((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleUpdate = async () => {
+    try {
+      setLoading(true);
+
+      const res = await axios.put(
+        `${import.meta.env.VITE_API_BASE_URL}/profile`,
+        user,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      if (res.data.success) {
+        toast.success('Profile updated successfully');
+        setIsEditing(false);
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (err) {
+      toast.error('Update failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
   return (
-  <div className="min-h-screen bg-gradient-to-br from-slate-100 via-gray-50 to-slate-200">
-    <Navbar />
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-gray-50 to-slate-200">
+      <Navbar />
 
-    <div className="max-w-6xl mx-auto px-4 py-14">
-      <h1 className="text-5xl font-bold tracking-tight text-slate-800 mb-12">
-        Welcome,{" "}
-        <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
-          {user.name || "User"}
-        </span>
-      </h1>
+      <div className="max-w-6xl mx-auto px-4 py-14">
+        <div className="flex justify-between items-center mb-10">
+          <h1 className="text-4xl font-bold text-slate-800">
+            Welcome,{" "}
+            <span className="text-indigo-500">
+              {user.name || "User"}
+            </span>
+          </h1>
 
-      <div className="relative bg-white/80 backdrop-blur-xl rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.08)] p-10 grid grid-cols-1 md:grid-cols-3 gap-10 items-center border border-white/40">
-
-        <div className="flex justify-center">
-          <div className="group relative w-48 h-48 rounded-full object-cover overflow-hidden border-[5px] border-indigo-400 shadow-lg cursor-pointer transition-all hover:scale-[1.03]">
-            <img
-              src={user.profilePhoto}
-              alt="Profile"
-              className=""
-            />
-          </div>
+          <Button
+            title={isEditing ? 'Cancel' : 'Edit Profile'}
+            onClick={() => setIsEditing(!isEditing)}
+          />
         </div>
 
-        <div className="md:col-span-2 space-y-6">
-          {[
-            ["Name", user.name],
-            ["Email", user.email],
-            ["Country", user.country],
-            ["City", user.city],
-          ].map(([label, value]) => (
-            <div
-              key={label}
-              className="flex items-center gap-6 bg-white rounded-xl px-6 py-4 shadow-sm hover:shadow-md transition"
-            >
-              <span className="text-sm uppercase tracking-wider text-slate-400 w-24">
-                {label}
-              </span>
-              <span className="text-lg font-medium text-slate-700">
-                {value}
-              </span>
-            </div>
-          ))}
+        <div className="bg-white rounded-3xl shadow-lg p-10 grid md:grid-cols-3 gap-10">
 
+
+          <div className="flex justify-center">
+             <div className="group relative w-48 h-48 rounded-full object-cover overflow-hidden border-[5px] border-indigo-400 shadow-lg cursor-pointer transition-all hover:scale-[1.03]">
+               <img src={user.profilePhoto} alt="Profile" className="" /> 
+          </div> 
+          </div>
+          <div className="md:col-span-2 space-y-5">
+            {['name', 'email', 'phone', 'country', 'city'].map((field) => (
+              <div key={field}>
+                <label className="block text-sm text-gray-500 mb-1 capitalize">
+                  {field}
+                </label>
+
+                {isEditing ? (
+                  <Input
+                    type="text"
+                    name={field}
+                    value={user[field] || ""}
+                    placeholder={`Enter ${field}`}
+                    onChange={handleChange}
+                  />
+                ) : (
+                  <div className="px-4 py-2 bg-gray-100 rounded-lg">
+                    {user[field] || "-"}
+                  </div>
+                )}
+              </div>
+            ))}
+
+            {isEditing && (
+              <Button
+                title={loading ? 'Saving...' : 'Save Changes'}
+                onClick={handleUpdate}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
-
+  );
 }
 
-export default Profile
+export default Profile;
